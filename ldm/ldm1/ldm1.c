@@ -10,20 +10,14 @@
 
 static int __init ldm1_init(void)
 {
-	struct task_struct *task;
-
-	PRINT();
-
-	for_each_process(task) {
-		printk("%s[%d]\n", task->comm, task->pid);
-	}
+	printk("Hello Kernel!\n");
 
 	return 0;
 }
 
 static void __exit ldm1_exit(void)
 {
-	PRINT();
+	printk("Bye Kernel!\n");
 }
 
 module_init(ldm1_init);

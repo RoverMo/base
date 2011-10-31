@@ -5,19 +5,17 @@ MODULES_NAME += $(SRCS:%.c=%.ko)
 obj-m += $(OBJS)
 
 all:
-	echo $(OBJS)
-	make -C /lib/modules/`uname -r`/build M=`pwd` modules
+	@make -C /lib/modules/`uname -r`/build M=`pwd` modules
 
 install:
-	dmesg -c
 	insmod $(MODULES_NAME)
-	dmesg
+	@dmesg -c
 
 uninstall:
 	@rmmod -v $(MODULES_NAME)
-	dmesg
+	@dmesg -c
 
 clean:
-	make -C /lib/modules/`uname -r`/build M=`pwd` clean
+	@make -C /lib/modules/`uname -r`/build M=`pwd` clean
 
 .PHONY:$(SRCS)
