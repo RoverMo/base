@@ -1,0 +1,68 @@
+#ifndef _INIT_H
+#define _INIT_H
+
+#define WTCON		0x53000000
+#define LOCKTIME	0x4c000000
+#define	MPLLCON		0x4C000004
+#define	CLKSLOW		0x4C000010
+#define	CLKDIVN		0x4C000014
+#define	CAMDIVN		0x4C000018
+#define WM2440_MAGIC	0x0688
+#define GPFCON		0x56000050
+#define GPFUP		0x56000058
+#define GPFDAT		0x56000054
+#define CLKCON		0x4C00000C
+
+#define GPHCON		0x56000070
+#define GPHDAT		0x56000074
+
+#define UMCON0		0x5000000C
+#define UMSTAT0		0x5000001C
+
+#define UFSTAT0		0x50000018
+#define UTRSTAT0	0x50000010
+#define UBRDIV0		0x50000028
+#define UTXH0		0x50000020
+#define URXH0		0x50000024
+#define ULCON0		0x50000000
+#define UCON0		0x50000004
+#define UFCON0		0x50000008
+#define UART_DIV	(328*1000000/8/(115200*16)-1)
+
+#define GET_LEN(array)	(sizeof(array)/sizeof(__typeof(array[0])))
+
+#define SDRAM_REG_BASE	0x48000000
+#define	SDRAM_BASE_ADDR	0x30000000
+
+#define NFCONF	0x4e000000
+#define	NFCONT	0x4E000004
+#define NFCMMD	0x4E000008
+#define	NFDATA	0x4E000010
+#define	NFADDR	0x4E00000C
+#define	NFSTAT	0x4E000020
+
+#define TWRPH0	1
+#define TWRPH1	1
+#define TACLS	1
+
+#define MEMERY_SIZE	(64*1024*1024)
+
+unsigned int gsdranRegTbl[]=
+{
+	0x220dd000,
+	0x00000700,
+	0x00000700,
+	0x00000700,
+	0x00000700,
+	0x00000700,
+	0x00000700,
+	0x00018009,
+	0x00018009,
+	0x00ac0354,
+	0x000000b2,
+	0x00000030,
+	0x00000030
+};
+
+
+#endif
