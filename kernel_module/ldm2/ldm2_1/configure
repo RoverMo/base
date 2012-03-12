@@ -1,0 +1,68 @@
+#!/bin/sh
+##
+## fbv configuration script
+##
+
+# See TGT's ./configure script for in-depth comments, becouse this
+# one is delivered from it...
+
+# If You touch anything below, You're asking for trouble
+
+BASENAME=$(basename "$0")
+
+unset auto_assign
+unset reg_chrdev
+unset reg_chrdev_region
+unset alloc_chrdev_region
+
+help()
+{
+cat << EOF >&2
+Usage: ./configure [options]
+Options: [defaults in brackets after descriptions]
+
+If a long option shows an argument as mandatory, then it is mandatory
+for the equivalent short option also.  Similarly for optional arguments.
+
+General:
+  --help	print this message
+  
+Features:
+  --with-auto-assigned			Automatically assigned device id
+  --with-manu-assigned			Manually assign device id
+  --with-register_chrdev		Used register_chrdev()
+  --with-register_chrdev_region	Used register_chrdev_region()
+  --with-alloc_chrdev_region	Used alloc_chrdev_region()
+EOF
+}
+
+i=1
+
+while opt=$$i ; do
+	echo $opt
+	case "$opt" in
+		-h|--help) help ; exit 0 ;;
+		--with-auto-assign) auto_assign="yes" ; shift ;;
+		--with-register_chrdev) reg_chrdev="select" ; shift ;;
+		--with-register_chrdev_region) reg_chrdev_region="select" ; shift ;;
+		--with-alloc_chrdev_region) alloc_chrdev_region="select" ; shift ;;
+
+		--) shift ; break ;;
+		*) help ; exit 1 ;;
+	esac
+done
+
+[ -z "${auto_assign}" ] && auto_assign="yes"
+[ -z "${reg_chrdev}" ] && reg_chrdev="unselect"
+[ -z "${reg_chrdev_region}" ] && reg_chrdev_region="unselect"
+[ -z "${alloc_chrdev_region}" ] && alloc_chrdev_region="unselect"
+
+[ ${alloc_chrdev_region} = "select" ] && auto_assign="yes"
+
+[ "$auto_assign" = "no" ] && echo "#define AUTO_ASSIGN" | tee -a ./config.log >>config.h
+[ "$reg_chrdev" = "select" ] && echo "#define USED_REG_CHRDEV" | tee -a ./config.log >>config.h
+[ "$reg_chrdev_region" = "select" ] && echo "#define REG_CHRDEV_REGION" | tee -a ./config.log >>config.h
+[ "$alloc_chrdev_region" = "select" ] && echo "#define ALLOC_CHRDEV_REGION" | tee -a ./config.log >>config.h
+
+exit 0
+## EOF
