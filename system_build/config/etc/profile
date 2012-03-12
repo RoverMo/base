@@ -1,0 +1,4 @@
+HOSTNAME=`/bin/hostname`
+PS1="[\u@\h \w]\#"
+export HOSTNAME PS1
+

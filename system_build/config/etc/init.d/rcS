@@ -1,0 +1,7 @@
+#!/bin/sh
+
+mount -t proc proc /proc
+mount -t sysfs none /sys
+mount -t tmpfs none /tmp
+/bin/hostname -F /etc/hostname
+/sbin/getty 115200 /dev/console
