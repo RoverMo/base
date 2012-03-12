@@ -5,15 +5,15 @@
 #include <unistd.h>
 #include <string.h>
 
-#define BUF_SIZE 32
+#include "ldm2.h"
 
 int main(int argc, char *argv[])
 {
 	int fd;
 	ssize_t n;
-	char ch;
 	const char *wbuf = "Hello Rover";
 	char rbuf[BUF_SIZE];
+	int ret;
 
 	fd = open("/dev/ldm2", O_RDWR);
 	if (fd < 0)
@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 		close(fd);
 		return fd;
 	}
+	printf("n = %ld\n", n);
 
 	n = read(fd, rbuf, BUF_SIZE);
 	if (n < 0)
@@ -37,10 +38,16 @@ int main(int argc, char *argv[])
 		return fd;
 	}
 	printf("%s\n", rbuf);
+	printf("n = %ld\n", n);
 
-	ioctl(fd, 100);
-
-	// printf("ch = %x", ch);
+	ret = ioctl(fd, LDM2_CMD_1, rbuf);
+	if (ret < 0)
+	{
+		close(fd);
+		perror("ioctl()");
+		return ret;
+	}
+	printf("%s\n", rbuf);
 
 	close(fd);
 
