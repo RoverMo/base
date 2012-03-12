@@ -1,12 +1,11 @@
 /*
- * This is a simple linux kernel module. It print all kernel
- * thread name and pid.
+ * This is a simple linux kernel module. It's a example to show how to
+ * programm in kernel space
  */
 
 #include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/module.h>
-#include <linux/kthread.h>
 
 static int __init ldm1_init(void)
 {
@@ -24,5 +23,5 @@ module_init(ldm1_init);
 module_exit(ldm1_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Rover Mo <rover.mo@maxwit.com>");
+MODULE_AUTHOR("Rover Mo <myzmzz@126.com>");
 MODULE_DESCRIPTION("A simple kernel module");
