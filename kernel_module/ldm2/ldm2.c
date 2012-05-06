@@ -8,7 +8,13 @@
 
 #include "ldm2.h"
 
-#define PRINT()		printk("%s() : %d\n", __FUNCTION__, __LINE__)
+#define LDM_DEBUG
+
+#ifdef LDM_DEBUG
+#define debug(fmt, args...) printk("%s():%d\t"fmt"\n", __FUNCTION__, __LINE__, ##args)
+#else
+#define debug(fmt, args...)
+#endif
 
 #define BY_ALLOC_CHRDEV_REGION
 
@@ -33,14 +39,14 @@ static char kbuf[BUF_SIZE];
 
 static int ldm2_open(struct inode *pinode, struct file *pfile)
 {
-	PRINT();
+	debug();
 
 	return 0;
 }
 
 static ssize_t ldm2_read(struct file *pfile, char __user *ubuf, size_t n, loff_t *offset)
 {
-	PRINT();
+	debug();
 
 	copy_to_user(ubuf, kbuf, n);
 	printk("%s\n", kbuf);
@@ -50,7 +56,7 @@ static ssize_t ldm2_read(struct file *pfile, char __user *ubuf, size_t n, loff_t
 
 static ssize_t ldm2_write(struct file *pfile, const char __user *ubuf, size_t n, loff_t *offset)
 {
-	PRINT();
+	debug();
 
 	copy_from_user(kbuf, ubuf, n);
 	printk("%s\n", ubuf);
@@ -62,7 +68,7 @@ static long ldm2_ioctl(struct file *pfile, unsigned int cmd, unsigned long arg)
 {
 	int i, n;
 
-	PRINT();
+	debug();
 
 	switch (cmd) {
 	case LDM2_CMD_1:
@@ -92,7 +98,7 @@ static long ldm2_ioctl(struct file *pfile, unsigned int cmd, unsigned long arg)
 
 static int ldm2_close(struct inode *pinode, struct file *pfile)
 {
-	PRINT();
+	debug();
 
 	return 0;
 }
@@ -142,7 +148,7 @@ static int __init ldm2_init(void)
 	cdev_add(&ldm2_cdev, dev_id, MIJOR_CNT);
 #endif
 
-	PRINT();
+	debug();
 
 	return 0;
 }
@@ -156,7 +162,7 @@ static void __exit ldm2_exit(void)
 	unregister_chrdev_region(dev_id, MIJOR_CNT);
 #endif
 
-	PRINT();
+	debug();
 }
 
 module_init(ldm2_init);

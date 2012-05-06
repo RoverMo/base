@@ -23,7 +23,8 @@ run:
 	@dmesg -c
 
 uninstall:
-	@rmmod $(MODULES_FILE)
+	@rmmod $(MODULES_NAME)
+	@rm /dev/$(MODULES_NAME)
 	@dmesg -c
 
 clean:
