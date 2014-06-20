@@ -12,20 +12,25 @@
 
 int main(int argc, char *argv[])
 {
-	long fd;
+	int fd;
+	int ret;
 
-	if (argc < 2)
+	if (argc != 2)
 	{
+		printf("Usage: %s <cdrom_device>\n", argv[0]);
 		return -EINVAL;
 	}
 
 	fd = open(argv[1], O_RDONLY | O_NONBLOCK);
 	if (fd < 0)
 	{
+		printf("Can not open %s(%d)\n", argv[1], fd);
 		return fd;
 	}
 
-	ioctl(fd, CDROMEJECT);
+	ret = ioctl(fd, CDROMEJECT);
+	if (ret < 0)
+		printf("Can not eject %s\n", argv[1]);
 
 	close(fd);
 
