@@ -1,7 +1,7 @@
 /*
- *¹¦ÄÜ£ºÍ³¼Æ×ÖÄ¸¡¢Êı×Ö¡¢¿Õ¸ñ¼°ÆäËûµÄ¸öÊı
- *²ÎÊı£º×Ö·û´®
- *·µ»ØÖµ£ºbcfo½á¹¹Ìå
+ * åŠŸèƒ½ï¼šç»Ÿè®¡å­—æ¯ã€æ•°å­—ã€ç©ºæ ¼åŠå…¶ä»–çš„ä¸ªæ•°
+ * å‚æ•°ï¼šå­—ç¬¦ä¸²
+ * è¿”å›å€¼ï¼šbcfoç»“æ„ä½“
  */
 
 #include <stdio.h>
@@ -19,24 +19,15 @@ void count_bcfo(const char *str, struct bcfo *count)
 {
 	memset(count, 0, sizeof(*count));
 
-    while (*str)
-	{
+	while (*str) {
 		if (*str == ' ')
-        {
 			count->blank++;
-        }
 		else if ((*str >= 'a' && *str <= 'z') || (*str >= 'A' && *str <= 'Z'))
-        {
 			count->alpha++;
-        }
 		else if(*str >= '0' && *str <= '9')
-        {
 			count->figure++;
-        }
 		else
-        {
 			count->other++;
-        }
 
 		str++;
 	}
@@ -44,13 +35,13 @@ void count_bcfo(const char *str, struct bcfo *count)
 
 int main(int argc, char **argv)
 {
-    struct bcfo number;
+	struct bcfo number;
 
 	const char *str = "jslsldlc../082mcs";
 
 	count_bcfo(str, &number);
 
-    printf("blank=%d,char=%d,figure=%d,other=%d\n", number.blank, number.alpha, number.figure, number.other);
+	printf("blank=%d,char=%d,figure=%d,other=%d\n", number.blank, number.alpha, number.figure, number.other);
 
-    return 0;
+	return 0;
 }
